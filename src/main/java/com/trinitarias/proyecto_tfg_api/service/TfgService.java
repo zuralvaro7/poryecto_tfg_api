@@ -21,6 +21,11 @@ public class TfgService {
         return transformFromEntityToDto(entity);
     }
 
+    public TfgUsuariosDto findById(Long id){
+        TfgUsuariosEntity entity = tfgUsuariosRepository.findById(id).get();
+        return transformFromEntityToDto(entity);
+    }
+
 
     public TfgUsuariosDto transformFromEntityToDto(TfgUsuariosEntity entity){
         TfgUsuariosDto dto = new TfgUsuariosDto();

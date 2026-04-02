@@ -6,10 +6,7 @@ import com.trinitarias.proyecto_tfg_api.validator.TfgValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/tfg")
@@ -44,5 +41,17 @@ public class TfgController {
         return ResponseEntity.status(status).body(body);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<?> obtenerUnUsuario(@PathVariable Long id){
+        HttpStatus status = null;
+        Object body = null;
+
+        TfgUsuariosDto dto = service.findById(id);
+        if (dto != null) {
+            status = HttpStatus.OK;
+            body = dto;
+        }
+        return ResponseEntity.status(status).body(body);
+    }
 
 }
