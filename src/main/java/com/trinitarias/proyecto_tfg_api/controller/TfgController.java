@@ -50,8 +50,30 @@ public class TfgController {
         if (dto != null) {
             status = HttpStatus.OK;
             body = dto;
+        }else{
+            status = HttpStatus.NOT_FOUND;
+            body = null;
         }
         return ResponseEntity.status(status).body(body);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> actualizarUsuario(@PathVariable Long id, @RequestBody TfgUsuariosDto tfgUsuariosDto) {
+        HttpStatus status = null;
+        Object body = null;
+
+        TfgUsuariosDto dto = service.actualizarUsuario(id, tfgUsuariosDto);
+        if (dto != null) {
+            status = HttpStatus.OK;
+            body = dto;
+        } else{
+            status = HttpStatus.BAD_REQUEST;
+            body = null;
+        }
+
+        return ResponseEntity.status(status).body(body);
+    }
+
+
 
 }

@@ -26,6 +26,21 @@ public class TfgService {
         return transformFromEntityToDto(entity);
     }
 
+    public TfgUsuariosDto actualizarUsuario(Long id, TfgUsuariosDto dto){
+        TfgUsuariosEntity entity = tfgUsuariosRepository.findById(id).get();
+
+        if (dto.getNombre_usuario() != null) {
+            entity.setNombre_usuario(dto.getNombre_usuario());
+        }
+        if (dto.getEmail() != null) {
+            entity.setEmail(dto.getEmail());
+        }
+        if (dto.getContrasena() != null) {
+            entity.setContrasena(dto.getContrasena());
+        }
+        TfgUsuariosEntity entityActualizado = tfgUsuariosRepository.save(entity);
+        return transformFromEntityToDto(entityActualizado);
+    }
 
     public TfgUsuariosDto transformFromEntityToDto(TfgUsuariosEntity entity){
         TfgUsuariosDto dto = new TfgUsuariosDto();
