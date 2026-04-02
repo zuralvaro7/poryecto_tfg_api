@@ -42,6 +42,13 @@ public class TfgService {
         return transformFromEntityToDto(entityActualizado);
     }
 
+    public void eliminarUsuario(Long id){
+        TfgUsuariosEntity entity = tfgUsuariosRepository.findById(id).get();
+        tfgUsuariosRepository.delete(entity);
+    }
+
+
+
     public TfgUsuariosDto transformFromEntityToDto(TfgUsuariosEntity entity){
         TfgUsuariosDto dto = new TfgUsuariosDto();
         dto.setId_usuario(entity.getId_usuario());

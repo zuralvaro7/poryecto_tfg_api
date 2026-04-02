@@ -74,6 +74,10 @@ public class TfgController {
         return ResponseEntity.status(status).body(body);
     }
 
-
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> eliminarUsuario(@PathVariable Long id){
+        service.eliminarUsuario(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+    }
 
 }
