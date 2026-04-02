@@ -80,4 +80,21 @@ public class TfgController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody TfgUsuariosDto tfgUsuariosDto){
+        HttpStatus status = null;
+        Object body = null;
+
+        TfgUsuariosDto dto = service.login(tfgUsuariosDto);
+        if (dto != null) {
+            status = HttpStatus.OK;
+            body = dto;
+        } else{
+            status = HttpStatus.BAD_REQUEST;
+            body = null;
+        }
+
+        return ResponseEntity.status(status).body(body);
+    }
+
 }

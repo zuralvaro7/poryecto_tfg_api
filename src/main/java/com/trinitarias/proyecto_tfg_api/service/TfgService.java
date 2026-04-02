@@ -47,6 +47,15 @@ public class TfgService {
         tfgUsuariosRepository.delete(entity);
     }
 
+    public TfgUsuariosDto login(TfgUsuariosDto dto) {
+        TfgUsuariosEntity entity = tfgUsuariosRepository.findByUsuario(dto.getNombre_usuario(), dto.getContrasena());
+        TfgUsuariosDto dtoU= null;
+        if(entity!=null) {
+            dtoU = transformFromEntityToDto(entity);
+        }
+        return dtoU;
+    }
+
 
 
     public TfgUsuariosDto transformFromEntityToDto(TfgUsuariosEntity entity){
