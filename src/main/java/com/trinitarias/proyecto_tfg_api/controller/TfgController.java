@@ -1,5 +1,7 @@
 package com.trinitarias.proyecto_tfg_api.controller;
 
+import com.trinitarias.proyecto_tfg_api.dto.TfgDtos;
+import com.trinitarias.proyecto_tfg_api.dto.TfgHistorialDto;
 import com.trinitarias.proyecto_tfg_api.dto.TfgUsuariosDto;
 import com.trinitarias.proyecto_tfg_api.service.TfgService;
 import com.trinitarias.proyecto_tfg_api.validator.TfgValidator;
@@ -97,4 +99,20 @@ public class TfgController {
         return ResponseEntity.status(status).body(body);
     }
 
+    @PostMapping("/subirhistorial")
+    public ResponseEntity<?> subirHistorial(@RequestBody TfgDtos tfgDtos){
+        HttpStatus status = null;
+        Object body = null;
+
+        TfgHistorialDto dto = service.subirHistorial(tfgDtos.getTfgHistorialDto(), tfgDtos.getTfgUsuariosDto().getId_usuario());
+        if (dto != null) {
+            status = HttpStatus.OK;
+            body = dto;
+        } else{
+            status = HttpStatus.BAD_REQUEST;
+            body = null;
+        }
+
+        return ResponseEntity.status(status).body(body);
+    }
 }
