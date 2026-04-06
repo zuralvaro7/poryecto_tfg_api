@@ -23,21 +23,27 @@ public class TfgValidator implements Validator {
         TfgUsuariosDto dto = (TfgUsuariosDto) target;
 
         if(dto.getNombre_usuario() == null || dto.getNombre_usuario().isBlank()) {
-            errors.rejectValue("usuarios.usuario","i18n.usuario.obligatorio" ,"El usuario es obligatorio");
+            errors.rejectValue("nombre_usuario","i18n.nombre_usuario.obligatorio" ,"El usuario es obligatorio");
         }
         if(dto.getContrasena() == null || dto.getContrasena().isBlank()) {
-            errors.rejectValue("usuarios.contrasena","i18n.contrasena.obligatorio" ,"La contraseña es obligatoria");
+            errors.rejectValue("contrasena","i18n.contrasena.obligatorio" ,"La contraseña es obligatoria");
         }
         if(!dto.getNombre_usuario().isEmpty() && !dto.getContrasena().isEmpty()) {
-            TfgUsuariosDto dtoU = service.login(dto);
-            if(dtoU==null) {
-                errors.rejectValue("usuarios.usuario","i18n.usuario.login" ,"El usuario y/o la contraseña son incorrectos");
+            if (dto.isEsLogin()) {
+                TfgUsuariosDto dtoU = service.login(dto);
+                if (dtoU == null) {
+                    errors.rejectValue("nombre_usuario", "i18n.nombre_usuario.login", "El usuario y/o la contraseña son incorrectos");
+                }
             }
         }
-        if (dto.getEmail().isBlank()) {
-            errors.rejectValue("usuarios.email", "i18n.email.obligatorio", "El campo debe ser obligatorio");
-        } else if(dto.getEmail().indexOf('@')<0 || dto.getEmail().indexOf('.')<0 || dto.getEmail().indexOf('@')>dto.getEmail().indexOf('.')) {
-            errors.rejectValue("usuarios.email", "i18n.email.formato", "El campo debe ser un email");
+        if (!dto.isEsLogin()) {
+            if (dto.getEmail().isBlank()) {
+                errors.rejectValue("email", "i18n.email.obligatorio", "El campo debe ser obligatorio");
+            } else if (dto.getEmail().indexOf('@') < 0 || dto.getEmail().indexOf('.') < 0 || dto.getEmail().indexOf('@') > dto.getEmail().indexOf('.')) {
+                errors.rejectValue("email", "i18n.email.formato", "El campo debe ser un email");
+            } else if (service.buscarEmail(dto) != null) {
+                errors.rejectValue("email", "i18n.email.existe", "El email ya existe");
+            }
         }
     }
 }

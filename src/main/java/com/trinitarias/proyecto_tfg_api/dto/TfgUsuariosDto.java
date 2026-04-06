@@ -10,16 +10,18 @@ public class TfgUsuariosDto {
     private String nombre_usuario;
     private String email;
     private String contrasena;
+    private Boolean esLogin;
 
     public TfgUsuariosDto() {
         super();
     }
 
-    public TfgUsuariosDto(Long id_usuario, String nombre_usuario, String email, String contrasena) {
+    public TfgUsuariosDto(Long id_usuario, String nombre_usuario, String email, String contrasena, boolean esLogin) {
         this.id_usuario = id_usuario;
         this.nombre_usuario = nombre_usuario;
         this.email = email;
         this.contrasena = contrasena;
+        this.esLogin = esLogin;
     }
 
     public Long getId_usuario() {
@@ -52,5 +54,13 @@ public class TfgUsuariosDto {
 
     public void setContrasena(String contrasena) {
         this.contrasena = contrasena;
+    }
+
+    public Boolean isEsLogin() {
+        return esLogin;
+    }
+
+    public void setEsLogin(Boolean esLogin) {
+        this.esLogin = esLogin;
     }
 }

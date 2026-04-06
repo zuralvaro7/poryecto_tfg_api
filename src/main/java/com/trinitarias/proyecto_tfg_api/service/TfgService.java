@@ -58,11 +58,22 @@ public class TfgService {
         return dtoU;
     }
 
+    public TfgUsuariosDto buscarEmail(TfgUsuariosDto dto) {
+        TfgUsuariosEntity entity = tfgUsuariosRepository.findByEmail(dto.getEmail());
+        TfgUsuariosDto dtoU= null;
+        if(entity!=null) {
+            dtoU = transformFromEntityToDtoU(entity);
+        }
+        return dtoU;
+    }
+
+
 
 
     public TfgHistorialDto subirHistorial(TfgHistorialDto dto, Long id) {
         dto.setId_usuario(id);
         TfgHistorialEntity entity = tfgHistorialRepository.save(transformFromDtoToEntityH(dto));
+
         return transformFromEntityToDtoH(entity);
     }
 

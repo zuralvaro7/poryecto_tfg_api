@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/tfg")
+@CrossOrigin(origins = "http://localhost:63343")
 public class TfgController {
 
     @Autowired
