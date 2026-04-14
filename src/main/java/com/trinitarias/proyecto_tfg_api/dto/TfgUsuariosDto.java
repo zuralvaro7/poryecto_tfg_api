@@ -1,7 +1,6 @@
 package com.trinitarias.proyecto_tfg_api.dto;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class TfgUsuariosDto {
 
@@ -10,13 +9,15 @@ public class TfgUsuariosDto {
     private String nombre_usuario;
     private String email;
     private String contrasena;
-    private Boolean esLogin;
+
+    @JsonIgnore
+    private Boolean esLogin = false;
 
     public TfgUsuariosDto() {
         super();
     }
 
-    public TfgUsuariosDto(Long id_usuario, String nombre_usuario, String email, String contrasena, boolean esLogin) {
+    public TfgUsuariosDto(Long id_usuario, String nombre_usuario, String email, String contrasena, Boolean esLogin) {
         this.id_usuario = id_usuario;
         this.nombre_usuario = nombre_usuario;
         this.email = email;
@@ -56,7 +57,7 @@ public class TfgUsuariosDto {
         this.contrasena = contrasena;
     }
 
-    public Boolean isEsLogin() {
+    public Boolean getEsLogin() {
         return esLogin;
     }
 

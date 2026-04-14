@@ -29,14 +29,14 @@ public class TfgValidator implements Validator {
             errors.rejectValue("contrasena","i18n.contrasena.obligatorio" ,"La contraseña es obligatoria");
         }
         if(!dto.getNombre_usuario().isEmpty() && !dto.getContrasena().isEmpty()) {
-            if (dto.isEsLogin()) {
+            if (!Boolean.TRUE.equals(dto.getEsLogin())) {
                 TfgUsuariosDto dtoU = service.login(dto);
                 if (dtoU == null) {
                     errors.rejectValue("nombre_usuario", "i18n.nombre_usuario.login", "El usuario y/o la contraseña son incorrectos");
                 }
             }
         }
-        if (!dto.isEsLogin()) {
+        if (Boolean.TRUE.equals(dto.getEsLogin())) {
             if (dto.getEmail().isBlank()) {
                 errors.rejectValue("email", "i18n.email.obligatorio", "El campo debe ser obligatorio");
             } else if (dto.getEmail().indexOf('@') < 0 || dto.getEmail().indexOf('.') < 0 || dto.getEmail().indexOf('@') > dto.getEmail().indexOf('.')) {

@@ -9,6 +9,8 @@ import com.trinitarias.proyecto_tfg_api.repository.TfgUsuariosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class TfgService {
 
@@ -77,6 +79,10 @@ public class TfgService {
         return transformFromEntityToDtoH(entity);
     }
 
+    public List<?> obtenerHistorial(Long id) {
+        List<?> lista = tfgHistorialRepository.buscarHistorial(id);
+        return lista;
+    }
 
 
 
@@ -118,5 +124,6 @@ public class TfgService {
         entity.setId_usuario(dto.getId_usuario());
         return entity;
     }
+
 
 }

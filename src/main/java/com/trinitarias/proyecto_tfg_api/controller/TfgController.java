@@ -11,9 +11,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/tfg")
-@CrossOrigin(origins = "http://localhost:63343")
+@CrossOrigin(origins = "*")
 public class TfgController {
 
     @Autowired
@@ -120,6 +122,23 @@ public class TfgController {
         if (dto != null) {
             status = HttpStatus.OK;
             body = dto;
+        } else{
+            status = HttpStatus.BAD_REQUEST;
+            body = null;
+        }
+
+        return ResponseEntity.status(status).body(body);
+    }
+
+    @PostMapping("/historial")
+    public ResponseEntity<?> historial(@RequestBody TfgUsuariosDto tfgUsuariosDto){
+        HttpStatus status = null;
+        Object body = null;
+
+        List<?> dtoH = service.obtenerHistorial(tfgUsuariosDto.getId_usuario());
+        if (dtoH != null) {
+            status = HttpStatus.OK;
+            body = dtoH;
         } else{
             status = HttpStatus.BAD_REQUEST;
             body = null;
