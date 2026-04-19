@@ -10,7 +10,7 @@ public class TfgUsuariosDto {
     private String email;
     private String contrasena;
 
-    @JsonIgnore
+
     private Boolean esLogin = false;
 
     public TfgUsuariosDto() {

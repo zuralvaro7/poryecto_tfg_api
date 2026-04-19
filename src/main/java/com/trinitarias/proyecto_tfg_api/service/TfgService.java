@@ -48,6 +48,7 @@ public class TfgService {
 
     public void eliminarUsuario(Long id){
         TfgUsuariosEntity entity = tfgUsuariosRepository.findById(id).get();
+        tfgHistorialRepository.borrarHistorial(id);
         tfgUsuariosRepository.delete(entity);
     }
 
