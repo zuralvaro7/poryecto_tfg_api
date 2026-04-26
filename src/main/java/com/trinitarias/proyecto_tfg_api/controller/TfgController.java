@@ -68,18 +68,26 @@ public class TfgController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> actualizarUsuario(@PathVariable Long id, @RequestBody TfgUsuariosDto tfgUsuariosDto) {
+    public ResponseEntity<?> actualizarUsuario(@PathVariable Long id, @RequestBody TfgUsuariosDto tfgUsuariosDto, Errors error) {
         HttpStatus status = null;
         Object body = null;
 
-        TfgUsuariosDto dto = service.actualizarUsuario(id, tfgUsuariosDto);
-        if (dto != null) {
-            status = HttpStatus.OK;
-            body = dto;
-        } else{
-            status = HttpStatus.BAD_REQUEST;
-            body = null;
+        validator.validate(tfgUsuariosDto, error);
+        if (!error.hasErrors()) {
+            TfgUsuariosDto dto = service.actualizarUsuario(id, tfgUsuariosDto);
+            if (dto != null) {
+                status = HttpStatus.OK;
+                body = dto;
+            } else{
+                status = HttpStatus.NOT_FOUND;
+                body = null;
+            }
+        }else{
+            status = HttpStatus.NOT_FOUND;
+            body = error.getAllErrors();
         }
+
+
 
         return ResponseEntity.status(status).body(body);
     }
