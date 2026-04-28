@@ -1,5 +1,6 @@
 package com.trinitarias.proyecto_tfg_api.controller;
 
+import com.trinitarias.proyecto_tfg_api.constantes.TfgConstantes;
 import com.trinitarias.proyecto_tfg_api.dto.TfgDtos;
 import com.trinitarias.proyecto_tfg_api.dto.TfgHistorialDto;
 import com.trinitarias.proyecto_tfg_api.dto.TfgUsuariosDto;
@@ -121,7 +122,7 @@ public class TfgController {
         return ResponseEntity.status(status).body(body);
     }
 
-    @PostMapping("/subirhistorial")
+    @PostMapping(TfgConstantes.ENDPOINT_SUBIR_HISTORIAL)
     public ResponseEntity<?> subirHistorial(@RequestBody TfgDtos tfgDtos){
         HttpStatus status = null;
         Object body = null;
