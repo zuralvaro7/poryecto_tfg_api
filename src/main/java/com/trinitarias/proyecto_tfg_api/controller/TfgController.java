@@ -16,7 +16,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/tfg")
-@CrossOrigin(origins = "*")
 public class TfgController {
 
     @Autowired
@@ -99,7 +98,7 @@ public class TfgController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
     }
 
-    @PostMapping("/login")
+    @PostMapping(TfgConstantes.ENDPOINT_LOGIN)
     public ResponseEntity<?> login(@RequestBody TfgUsuariosDto tfgUsuariosDto, Errors error){
         HttpStatus status = null;
         Object body = null;
@@ -139,7 +138,7 @@ public class TfgController {
         return ResponseEntity.status(status).body(body);
     }
 
-    @PostMapping("/historial")
+    @PostMapping(TfgConstantes.ENDPOINT_HISTORIAL)
     public ResponseEntity<?> historial(@RequestBody TfgUsuariosDto tfgUsuariosDto){
         HttpStatus status = null;
         Object body = null;
