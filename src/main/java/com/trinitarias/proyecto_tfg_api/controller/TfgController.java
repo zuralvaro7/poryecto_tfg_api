@@ -6,6 +6,7 @@ import com.trinitarias.proyecto_tfg_api.dto.TfgHistorialDto;
 import com.trinitarias.proyecto_tfg_api.dto.TfgUsuariosDto;
 import com.trinitarias.proyecto_tfg_api.service.TfgService;
 import com.trinitarias.proyecto_tfg_api.validator.TfgValidator;
+import com.trinitarias.proyecto_tfg_api.validator.TfgValidatorActualizar;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,9 @@ public class TfgController {
 
     @Autowired
     private TfgValidator validator;
+
+    @Autowired
+    private TfgValidatorActualizar validatorActualizar;
 
     /***
      * Cea el usuario
@@ -71,8 +75,8 @@ public class TfgController {
     public ResponseEntity<?> actualizarUsuario(@PathVariable Long id, @RequestBody TfgUsuariosDto tfgUsuariosDto, Errors error) {
         HttpStatus status = null;
         Object body = null;
-
-        validator.validate(tfgUsuariosDto, error);
+        tfgUsuariosDto.setId_usuario(id);
+        validatorActualizar.validate(tfgUsuariosDto, error);
         if (!error.hasErrors()) {
             TfgUsuariosDto dto = service.actualizarUsuario(id, tfgUsuariosDto);
             if (dto != null) {
