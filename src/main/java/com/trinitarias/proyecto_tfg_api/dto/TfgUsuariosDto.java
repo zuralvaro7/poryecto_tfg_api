@@ -1,7 +1,5 @@
 package com.trinitarias.proyecto_tfg_api.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 public class TfgUsuariosDto {
 
 
@@ -9,6 +7,8 @@ public class TfgUsuariosDto {
     private String nombre_usuario;
     private String email;
     private String contrasena;
+    private String veri_token;
+    private Boolean activo;
 
 
     private Boolean esLogin = false;
@@ -17,11 +17,13 @@ public class TfgUsuariosDto {
         super();
     }
 
-    public TfgUsuariosDto(Long id_usuario, String nombre_usuario, String email, String contrasena, Boolean esLogin) {
+    public TfgUsuariosDto(Long id_usuario, String nombre_usuario, String email, String contrasena, String veri_token, Boolean activo, Boolean esLogin) {
         this.id_usuario = id_usuario;
         this.nombre_usuario = nombre_usuario;
         this.email = email;
         this.contrasena = contrasena;
+        this.veri_token = veri_token;
+        this.activo = activo;
         this.esLogin = esLogin;
     }
 
@@ -57,6 +59,22 @@ public class TfgUsuariosDto {
         this.contrasena = contrasena;
     }
 
+    public String getVeri_token() {
+        return veri_token;
+    }
+
+    public void setVeri_token(String veri_token) {
+        this.veri_token = veri_token;
+    }
+
+    public Boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
+    }
+
     public Boolean getEsLogin() {
         return esLogin;
     }
@@ -65,3 +83,4 @@ public class TfgUsuariosDto {
         this.esLogin = esLogin;
     }
 }
+

@@ -4,6 +4,7 @@ import com.trinitarias.proyecto_tfg_api.constantes.TfgConstantes;
 import com.trinitarias.proyecto_tfg_api.dto.TfgDtos;
 import com.trinitarias.proyecto_tfg_api.dto.TfgHistorialDto;
 import com.trinitarias.proyecto_tfg_api.dto.TfgUsuariosDto;
+import com.trinitarias.proyecto_tfg_api.service.TfgEmailService;
 import com.trinitarias.proyecto_tfg_api.service.TfgService;
 import com.trinitarias.proyecto_tfg_api.validator.TfgValidator;
 import com.trinitarias.proyecto_tfg_api.validator.TfgValidatorActualizar;
@@ -96,6 +97,22 @@ public class TfgController {
         return ResponseEntity.status(status).body(body);
     }
 
+    @GetMapping("/verificar")
+    public ResponseEntity<String> verificarUsuario(@RequestParam String token){
+        HttpStatus status = null;
+        String body = null;
+        TfgUsuariosDto dto = service.findByToken(token);
+        if(dto!=null){
+            status = HttpStatus.OK;
+            body = "Se ha autentificado correctamente, puedes cerrar esta pagina";
+        }else{
+            status = HttpStatus.NOT_FOUND;
+            body = "No se ha podido autentificar vuelvalo ha intentar";
+        }
+        return ResponseEntity.status(status).body(body);
+    }
+
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> eliminarUsuario(@PathVariable Long id){
         service.eliminarUsuario(id);
@@ -146,14 +163,17 @@ public class TfgController {
     public ResponseEntity<?> historial(@RequestBody TfgUsuariosDto tfgUsuariosDto){
         HttpStatus status = null;
         Object body = null;
-
+        TfgUsuariosDto dto = service.findById(tfgUsuariosDto.getId_usuario());
         List<?> dtoH = service.obtenerHistorial(tfgUsuariosDto.getId_usuario());
-        if (dtoH != null) {
-            status = HttpStatus.OK;
-            body = dtoH;
-        } else{
-            status = HttpStatus.BAD_REQUEST;
-            body = null;
+        if(dto.isActivo()) {
+            if (dtoH != null) {
+                status = HttpStatus.OK;
+                body = dtoH;
+            } else {
+                status = HttpStatus.BAD_REQUEST;
+            }
+        }else{
+            status = HttpStatus.UNAUTHORIZED;
         }
 
         return ResponseEntity.status(status).body(body);

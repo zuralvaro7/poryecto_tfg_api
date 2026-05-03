@@ -20,17 +20,24 @@ public class TfgUsuariosEntity {
     @Column(name="contrasena")
     private String contrasena;
 
+	@Column(name="veri_token")
+	private String veri_token;
+
+	@Column(name="activo")
+	private Boolean activo;
+
 	public TfgUsuariosEntity() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public TfgUsuariosEntity(Long id_usuario, String nombre_usuario, String email, String contrasena) {
-		super();
+	public TfgUsuariosEntity(Long id_usuario, String nombre_usuario, String email, String contrasena, String veri_token, Boolean activo) {
 		this.id_usuario = id_usuario;
 		this.nombre_usuario = nombre_usuario;
 		this.email = email;
 		this.contrasena = contrasena;
+		this.veri_token = veri_token;
+		this.activo = activo;
 	}
 
 	public Long getId_usuario() {
@@ -63,5 +70,21 @@ public class TfgUsuariosEntity {
 
 	public void setContrasena(String contrasena) {
 		this.contrasena = contrasena;
+	}
+
+	public String getVeri_token() {
+		return veri_token;
+	}
+
+	public void setVeri_token(String veri_token) {
+		this.veri_token = veri_token;
+	}
+
+	public Boolean isActivo() {
+		return activo;
+	}
+
+	public void setActivo(Boolean activo) {
+		this.activo = activo;
 	}
 }

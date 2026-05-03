@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class TfgService {
@@ -20,8 +21,17 @@ public class TfgService {
     @Autowired
     private TfgHistorialRepository tfgHistorialRepository;
 
+    @Autowired
+    TfgEmailService emailService;
+
+
+
     public TfgUsuariosDto crearUsuario(TfgUsuariosDto dto){
+        String token = UUID.randomUUID().toString();
+        dto.setVeri_token(token);
+        dto.setActivo(Boolean.FALSE);
         TfgUsuariosEntity entity = tfgUsuariosRepository.save(transformFromDtoToEntityU(dto));
+        emailService.sendVerificationEmail(dto.getEmail(),token);
         return transformFromEntityToDtoU(entity);
     }
 
@@ -70,6 +80,18 @@ public class TfgService {
         return dtoU;
     }
 
+    public TfgUsuariosDto findByToken(String token){
+        TfgUsuariosEntity entity = tfgUsuariosRepository.findByToken(token);
+        TfgUsuariosDto dtoU= null;
+        if(entity!=null) {
+            entity.setVeri_token(null);
+            entity.setActivo(Boolean.TRUE);
+            tfgUsuariosRepository.save(entity);
+            dtoU = transformFromEntityToDtoU(entity);
+        }
+        return dtoU;
+    }
+
 
 
 
@@ -94,6 +116,8 @@ public class TfgService {
         dto.setNombre_usuario(entity.getNombre_usuario());
         dto.setEmail(entity.getEmail());
         dto.setContrasena(entity.getContrasena());
+        dto.setVeri_token(entity.getVeri_token());
+        dto.setActivo(entity.isActivo());
         return dto;
     }
     public TfgUsuariosEntity transformFromDtoToEntityU(TfgUsuariosDto dto){
@@ -102,6 +126,8 @@ public class TfgService {
         entity.setNombre_usuario(dto.getNombre_usuario());
         entity.setEmail(dto.getEmail());
         entity.setContrasena(dto.getContrasena());
+        entity.setVeri_token(dto.getVeri_token());
+        entity.setActivo(dto.isActivo());
         return entity;
     }
 
