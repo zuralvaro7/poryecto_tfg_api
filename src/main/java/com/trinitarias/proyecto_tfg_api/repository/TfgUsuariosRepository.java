@@ -16,4 +16,7 @@ public interface TfgUsuariosRepository extends JpaRepository<TfgUsuariosEntity, 
 
     @Query(value="SELECT * FROM usuarios WHERE veri_token = :token", nativeQuery = true)
     public TfgUsuariosEntity findByToken(String token);
+
+    @Query(value="SELECT * FROM usuarios WHERE nombre_usuario = :usuario", nativeQuery = true)
+    public TfgUsuariosEntity findNombreUsuario(String usuario);
 }

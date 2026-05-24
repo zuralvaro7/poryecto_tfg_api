@@ -1,16 +1,18 @@
 package com.trinitarias.proyecto_tfg_api.service;
 
+import java.util.List;
+import java.util.UUID;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
 import com.trinitarias.proyecto_tfg_api.dto.TfgHistorialDto;
 import com.trinitarias.proyecto_tfg_api.dto.TfgUsuariosDto;
 import com.trinitarias.proyecto_tfg_api.entity.TfgHistorialEntity;
 import com.trinitarias.proyecto_tfg_api.entity.TfgUsuariosEntity;
 import com.trinitarias.proyecto_tfg_api.repository.TfgHistorialRepository;
 import com.trinitarias.proyecto_tfg_api.repository.TfgUsuariosRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.UUID;
 
 @Service
 public class TfgService {
@@ -22,6 +24,9 @@ public class TfgService {
     private TfgHistorialRepository tfgHistorialRepository;
 
     @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
     TfgEmailService emailService;
 
 
@@ -30,6 +35,9 @@ public class TfgService {
         String token = UUID.randomUUID().toString();
         dto.setVeri_token(token);
         dto.setActivo(Boolean.FALSE);
+
+        dto.setContrasena(encriptar(dto.getContrasena()));
+
         TfgUsuariosEntity entity = tfgUsuariosRepository.save(transformFromDtoToEntityU(dto));
         emailService.sendVerificationEmail(dto.getEmail(),token);
         return transformFromEntityToDtoU(entity);
@@ -63,10 +71,12 @@ public class TfgService {
     }
 
     public TfgUsuariosDto login(TfgUsuariosDto dto) {
-        TfgUsuariosEntity entity = tfgUsuariosRepository.findByUsuario(dto.getNombre_usuario(), dto.getContrasena());
-        TfgUsuariosDto dtoU= null;
-        if(entity!=null) {
-            dtoU = transformFromEntityToDtoU(entity);
+        TfgUsuariosDto dtoU = null;
+        if(verificarContrasena(dto.getNombre_usuario(), dto.getContrasena())) {
+            TfgUsuariosEntity entity = tfgUsuariosRepository.findByUsuario(dto.getNombre_usuario(), tfgUsuariosRepository.findNombreUsuario(dto.getNombre_usuario()).getContrasena());
+            if (entity != null) {
+                dtoU = transformFromEntityToDtoU(entity);
+            }
         }
         return dtoU;
     }
@@ -106,6 +116,23 @@ public class TfgService {
         List<?> lista = tfgHistorialRepository.buscarHistorial(id);
         return lista;
     }
+
+
+
+    public String encriptar(String pass){
+        return passwordEncoder.encode(pass);
+    }
+
+    public boolean verificarContrasena(String usuario, String passPlana) {
+        TfgUsuariosEntity usuarioE = tfgUsuariosRepository.findNombreUsuario(usuario);
+
+        if (usuarioE != null) {
+            TfgUsuariosDto usuarioD = transformFromEntityToDtoU(usuarioE);
+            return passwordEncoder.matches(passPlana, usuarioD.getContrasena());
+        }
+        return false; // Usuario no encontrado
+    }
+
 
 
 

@@ -16,7 +16,7 @@ public class TfgEmailService {
         mensaje.setTo(to);
         mensaje.setFrom("norepli@tfgapi.com");
         mensaje.setSubject("Verificación de Cuenta");
-        mensaje.setText("Por favor, verifica tu cuenta: http://localhost:8080/api/v1/tfg/verificar?token=" + token);
+        mensaje.setText("Por favor, verifica tu cuenta: ${PAGINA}/api/v1/tfg/verificar?token=" + token);
         mailSender.send(mensaje);
 
     }
