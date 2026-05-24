@@ -14,7 +14,7 @@ public class TfgCorsConfiguracion {
      @Bean
     public CorsConfigurationSource corsConfigurationSource(){
          CorsConfiguration conf = new CorsConfiguration();
-         conf.setAllowedOriginPatterns(List.of("http://localhost:*"));
+         conf.setAllowedOriginPatterns(List.of("http://localhost:*", "https://proyecto-tfg-front-web.netlify.app/"));
          conf.setAllowedMethods(List.of("GET","POST", "PUT","DELETE"));
          conf.setAllowedHeaders(List.of("*"));
          conf.setAllowCredentials(true);
