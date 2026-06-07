@@ -159,12 +159,12 @@ public class TfgController {
         return ResponseEntity.status(status).body(body);
     }
 
-    @PostMapping(TfgConstantes.ENDPOINT_HISTORIAL)
-    public ResponseEntity<?> historial(@RequestBody TfgUsuariosDto tfgUsuariosDto){
+    @GetMapping(TfgConstantes.ENDPOINT_HISTORIAL+"/{id}")
+    public ResponseEntity<?> historial(@PathVariable Long id){
         HttpStatus status = null;
         Object body = null;
-        TfgUsuariosDto dto = service.findById(tfgUsuariosDto.getId_usuario());
-        List<?> dtoH = service.obtenerHistorial(tfgUsuariosDto.getId_usuario());
+        TfgUsuariosDto dto = service.findById(id);
+        List<?> dtoH = service.obtenerHistorial(id);
         if(dto.isActivo()) {
             if (dtoH != null) {
                 status = HttpStatus.OK;
