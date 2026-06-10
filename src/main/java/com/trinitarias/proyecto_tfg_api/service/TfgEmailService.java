@@ -12,8 +12,7 @@ public class TfgEmailService {
     @Autowired
     private JavaMailSender mailSender;
 
-    @Value("${API}")
-    private String api;
+
 
 
     public void sendVerificationEmail(String to, String token) {
@@ -21,7 +20,7 @@ public class TfgEmailService {
         mensaje.setTo(to);
         mensaje.setFrom("norepli@tfgapi.com");
         mensaje.setSubject("Verificación de Cuenta");
-        mensaje.setText("Por favor, verifica tu cuenta: "+ api +"/api/v1/tfg/verificar?token=" + token);
+        mensaje.setText("Por favor, verifica tu cuenta: https://poryectotfgapi-production.up.railway.app/api/v1/tfg/verificar?token=" + token);
         mailSender.send(mensaje);
 
     }
