@@ -42,7 +42,7 @@ public class TfgController {
         validator.validate(tfgUsuariosDto, error);
         if (!error.hasErrors()) {
             TfgUsuariosDto dto = service.crearUsuario(tfgUsuariosDto);
-            if (tfgUsuariosDto != null) {
+            if (dto != null) {
                 status = HttpStatus.CREATED;
                 body = dto;
             }else {
