@@ -29,29 +29,38 @@ public class TfgEmailService {
 
     public void sendVerificationEmail(String to, String token) {
 
-        System.out.println("=== INICIO ENVIO EMAIL ===");
-        System.out.println("DESTINO: " + to);
+        System.out.println("1");
 
         SimpleMailMessage mensaje = new SimpleMailMessage();
 
+        System.out.println("2");
+
         mensaje.setTo(to);
-        mensaje.setFrom("TU_CORREO_GMAIL@gmail.com");
+
+        System.out.println("3");
+
+        mensaje.setFrom(System.getenv("USER_EMAIL"));
+
+        System.out.println("4");
+
         mensaje.setSubject("Verificación de Cuenta");
 
-        mensaje.setText(
-                "https://poryectotfgapi-production.up.railway.app/api/v1/tfg/verificar?token="
-                        + token
-        );
+        System.out.println("5");
+
+        mensaje.setText("Texto");
+
+        System.out.println("6");
 
         try {
+            System.out.println("7");
             mailSender.send(mensaje);
-            System.out.println("EMAIL ENVIADO CORRECTAMENTE");
+            System.out.println("8");
         } catch (Exception e) {
-            System.out.println("ERROR ENVIANDO EMAIL");
+            System.out.println("9");
             e.printStackTrace();
         }
 
-        System.out.println("=== FIN ENVIO EMAIL ===");
+        System.out.println("10");
     }
 
 }
