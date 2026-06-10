@@ -13,6 +13,8 @@ public class TfgEmailService {
     private JavaMailSender mailSender;
 
     @Value("${API}")
+    private String api;
+
     public void sendVerificationEmail(String to, String token) {
         SimpleMailMessage mensaje = new SimpleMailMessage();
         mensaje.setTo(to);
